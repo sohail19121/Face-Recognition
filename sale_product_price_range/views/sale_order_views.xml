@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_sale_price_range" model="ir.ui.view">
+        <field name="name">sale.order.form.sale.price.range</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='order_lines']//form//field[@name='price_unit']" position="before">
+                <field name="has_sale_price_range" invisible="1"/>
+                <field name="sale_price_out_of_range" invisible="1"/>
+            </xpath>
+            <xpath expr="//page[@name='order_lines']//form//field[@name='price_unit']" position="after">
+                <field
+                    name="sale_price_range_display"
+                    readonly="1"
+                    invisible="display_type or not has_sale_price_range"
+                />
+                <field
+                    name="sale_price_range_status"
+                    widget="badge"
+                    readonly="1"
+                    invisible="display_type or not has_sale_price_range"
+                    decoration-success="sale_price_range_status == 'in_range'"
+                    decoration-warning="sale_price_range_status == 'below_min'"
+                    decoration-danger="sale_price_range_status == 'above_max'"
+                />
+            </xpath>
+
+            <xpath expr="//page[@name='order_lines']//list//field[@name='price_unit']" position="before">
+                <field name="has_sale_price_range" column_invisible="True"/>
+                <field name="sale_price_out_of_range" column_invisible="True"/>
+            </xpath>
+            <xpath expr="//page[@name='order_lines']//list//field[@name='price_unit']" position="attributes">
+                <attribute name="decoration-danger">sale_price_out_of_range</attribute>
+            </xpath>
+            <xpath expr="//page[@name='order_lines']//list//field[@name='price_unit']" position="after">
+                <field name="sale_price_range_display" string="Allowed Range" readonly="1" optional="show"/>
+                <field
+                    name="sale_price_range_status"
+                    string="Range Status"
+                    widget="badge"
+                    readonly="1"
+                    optional="show"
+                    decoration-success="sale_price_range_status == 'in_range'"
+                    decoration-warning="sale_price_range_status == 'below_min'"
+                    decoration-danger="sale_price_range_status == 'above_max'"
+                    decoration-muted="sale_price_range_status == 'no_range'"
+                />
+            </xpath>
+
+            <xpath expr="//page[@name='order_lines']//kanban//field[@name='price_unit']/ancestor::div[1]" position="after">
+                <div class="text-muted">
+                    Allowed Range:
+                    <field name="sale_price_range_display" readonly="1"/>
+                </div>
+                <div>
+                    <field
+                        name="sale_price_range_status"
+                        widget="badge"
+                        readonly="1"
+                        decoration-success="sale_price_range_status == 'in_range'"
+                        decoration-warning="sale_price_range_status == 'below_min'"
+                        decoration-danger="sale_price_range_status == 'above_max'"
+                        decoration-muted="sale_price_range_status == 'no_range'"
+                    />
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
