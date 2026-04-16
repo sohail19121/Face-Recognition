@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_view_sale_price_range" model="ir.ui.view">
+        <field name="name">product.template.form.sale.price.range</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='list_price_uom']" position="after">
+                <field name="use_sale_price_range" invisible="not sale_ok"/>
+                <label for="min_sale_price" invisible="not sale_ok or not use_sale_price_range"/>
+                <div name="sale_price_range_box" invisible="not sale_ok or not use_sale_price_range">
+                    <field
+                        name="min_sale_price"
+                        class="oe_inline"
+                        widget="monetary"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"
+                    />
+                    <span class="mx-2">to</span>
+                    <field
+                        name="max_sale_price"
+                        class="oe_inline"
+                        widget="monetary"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"
+                    />
+                </div>
+                <!-- <div class="text-muted fst-italic" invisible="not sale_ok or not use_sale_price_range">
+                    Salespeople will see this allowed price range while creating sale orders.
+                </div> -->
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_tree_view_sale_price_range" model="ir.ui.view">
+        <field name="name">product.template.tree.sale.price.range</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="list_price" position="after">
+                <field name="use_sale_price_range" optional="hide"/>
+                <field name="min_sale_price" optional="hide"/>
+                <field name="max_sale_price" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_variant_easy_edit_view_sale_price_range" model="ir.ui.view">
+        <field name="name">product.product.form.sale.price.range</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='pricing']/field[@name='cost_currency_id']" position="after">
+                <field name="use_variant_sale_price_range"/>
+                <label
+                    for="variant_min_sale_price"
+                    invisible="not use_variant_sale_price_range"
+                />
+                <div
+                    name="variant_sale_price_range_box"
+                    class="o_row"
+                    invisible="not use_variant_sale_price_range"
+                >
+                    <field
+                        name="variant_min_sale_price"
+                        class="oe_inline"
+                        widget="monetary"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"
+                    />
+                    <span class="mx-2">to</span>
+                    <field
+                        name="variant_max_sale_price"
+                        class="oe_inline"
+                        widget="monetary"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"
+                    />
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
