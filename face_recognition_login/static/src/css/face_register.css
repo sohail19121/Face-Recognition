@@ -1,0 +1,16 @@
+/* face_register.css — Backend registration dialog styles */
+
+.o_face_register_container {
+    padding: 16px;
+}
+
+.o_face_register_container video {
+    border-radius: 8px;
+    border: 2px solid #dee2e6;
+}
+
+.o_face_register_actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit the standard login template to add face-login UI -->
+    <template id="login_face_recognition" inherit_id="web.login">
+        <xpath expr="//div[contains(@class, 'oe_login_buttons')]" position="before">
+            <div id="face_login_panel" class="face-login-panel mb-3" style="display:none;">
+                <div class="face-video-wrapper">
+                    <video id="face_video"
+                           autoplay="autoplay"
+                           muted="muted"
+                           playsinline="playsinline"></video>
+                    <canvas id="face_canvas"></canvas>
+                    <div id="face_status_overlay" class="face-status-overlay">
+                        <span id="face_status_text">Initializing camera…</span>
+                    </div>
+                </div>
+                <div class="face-login-actions mt-2 d-flex gap-2 justify-content-center">
+                    <button type="button" id="btn_face_scan"
+                            class="btn btn-primary btn-sm">
+                        <i class="fa fa-camera me-1"/> Scan Face
+                    </button>
+                    <button type="button" id="btn_face_cancel"
+                            class="btn btn-secondary btn-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Add "Login with Face" toggle button below the password field -->
+        <xpath expr="//button[@type='submit' and contains(@class,'btn-primary')]" position="after">
+            <div class="text-center mt-2">
+                <span class="text-muted small">— or —</span>
+            </div>
+            <button type="button" id="btn_toggle_face_login"
+                    class="btn btn-outline-secondary w-100 mt-2">
+                <i class="fa fa-eye me-1"/> Login with Face Recognition
+            </button>
+        </xpath>
+    </template>
+</odoo>

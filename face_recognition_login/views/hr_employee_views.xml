@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_face_recognition" model="ir.ui.view">
+        <field name="name">hr.employee.face.recognition</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="face_recognition" string="Face Recognition">
+                    <group string="Face Login Settings">
+                        <field name="user_id" readonly="1"/>
+                        <field name="face_recognition_enabled" readonly="1" invisible="not user_id"/>
+                        <field name="face_registered_at" readonly="1" invisible="not user_id"/>
+                        <field name="face_image"
+                               widget="image"
+                               options="{'size': [128, 128]}"
+                               readonly="1"
+                               invisible="not user_id"/>
+                    </group>
+                    <div class="alert alert-info" invisible="user_id">
+                        Link this employee to a user before registering face data.
+                    </div>
+                    <div class="o_face_register_actions mt-3" invisible="not user_id">
+                        <button name="action_register_face"
+                                type="object"
+                                string="Register / Update Face"
+                                class="btn btn-primary me-2"
+                                icon="fa-camera"/>
+                        <button name="action_clear_face_data"
+                                type="object"
+                                string="Remove Face Data"
+                                class="btn btn-danger"
+                                icon="fa-trash"/>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
