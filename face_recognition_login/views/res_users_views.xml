@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend the user preferences form -->
+    <record id="view_users_form_face" model="ir.ui.view">
+        <field name="name">res.users.face.recognition</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='preferences']" position="after">
+                <page name="face_recognition" string="Face Recognition">
+                    <group string="Face Login Settings">
+                        <field name="face_recognition_enabled" readonly="1"/>
+                        <field name="face_registered_at" readonly="1"/>
+                        <field name="face_image" widget="image"
+                               options="{'size': [128, 128]}"
+                               readonly="1"/>
+                    </group>
+                    <div class="o_face_register_actions mt-3">
+                        <button name="action_register_face"
+                                type="object"
+                                string="Register / Update Face"
+                                class="btn btn-primary me-2"
+                                icon="fa-camera"/>
+                        <button name="clear_face_data"
+                                type="object"
+                                string="Remove Face Data"
+                                class="btn btn-danger"
+                                icon="fa-trash"
+                              />
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Popup form for webcam-based face registration -->
+    <record id="view_res_users_face_register" model="ir.ui.view">
+        <field name="name">res.users.face.register.popup</field>
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <form string="Register Face">
+                <sheet>
+                    <div class="o_face_register_container text-center">
+                        <div class="d-none">
+                            <field name="id" readonly="1" class="o_face_target_user_id"/>
+                        </div>
+                        <h4>Position your face in the frame and click Capture</h4>
+                        <div class="face-video-wrapper mx-auto mb-3"
+                             style="width:320px;position:relative;">
+                            <video id="reg_face_video"
+                                   autoplay="autoplay"
+                                   muted="muted"
+                                   playsinline="playsinline"
+                                   style="width:100%;border-radius:8px;"/>
+                            <canvas id="reg_face_canvas"
+                                    style="position:absolute;top:0;left:0;"/>
+                        </div>
+                        <div id="reg_face_status" class="alert alert-info">
+                            Starting camera…
+                        </div>
+                        <button type="button" id="btn_capture_face"
+                                class="btn btn-success me-2">
+                            <i class="fa fa-camera me-1"/> Capture &amp; Save
+                        </button>
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                                onclick="window.faceRegisterCleanup &amp;&amp; window.faceRegisterCleanup()">
+                            Cancel
+                        </button>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Security access rules -->
+  
+</odoo>
